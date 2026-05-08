@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — StyleStudio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D0D;
+      --bg3: #161616;
+      --border: #1E1E1E;
+      --green: #4A9B6F;
+      --green-dark: #2E5C40;
+      --text: #F5F2EC;
+      --muted: #888;
+      --subtle: #555;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      background: var(--green-dark);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .nav-logo-text { font-size: 18px; font-weight: 700; color: var(--text); }
+    .nav-back { color: var(--green); text-decoration: none; font-size: 14px; font-weight: 500; }
+    .nav-back:hover { text-decoration: underline; }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+    }
+    h1 {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .updated {
+      font-size: 13px;
+      color: var(--subtle);
+      margin-bottom: 48px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    ul {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    ul li {
+      font-size: 15px;
+      color: var(--muted);
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+    }
+    a { color: var(--green); }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    footer {
+      text-align: center;
+      padding: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--subtle);
+    }
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      main { padding: 48px 20px 80px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">✦</div>
+      <span class="nav-logo-text">StyleStudio</span>
+    </a>
+    <a href="index.html" class="nav-back">← Back to home</a>
+  </nav>
+
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: May 8, 2026</p>
+
+    <p>StyleStudio ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our mobile application.</p>
+
+    <hr class="divider" />
+
+    <h2>1. Information We Collect</h2>
+    <p>We collect information you provide directly to us, including:</p>
+    <ul>
+      <li>Wardrobe photos and item descriptions you add to your closet</li>
+      <li>Style preferences and outfit plans you create</li>
+      <li>Calendar events and outfit schedules</li>
+      <li>Account information if you choose to create a profile</li>
+    </ul>
+
+    <h2>2. Social Media Integration</h2>
+    <p>StyleStudio optionally connects to third-party platforms (Instagram, TikTok, Pinterest) via OAuth 2.0. When you connect an account:</p>
+    <ul>
+      <li>We only request read-only access to your own posts and profile</li>
+      <li>We never post, comment, follow, or modify anything on your behalf</li>
+      <li>Access tokens are stored securely on your device using encrypted storage</li>
+      <li>You can disconnect any platform at any time from within the app</li>
+      <li>We do not share your social data with any third parties</li>
+    </ul>
+
+    <h2>3. How We Use Your Information</h2>
+    <p>We use the information we collect to:</p>
+    <ul>
+      <li>Provide, maintain, and improve the StyleStudio app</li>
+      <li>Generate personalized AI outfit recommendations</li>
+      <li>Sync your wardrobe and preferences across sessions</li>
+      <li>Display your connected social content within the app</li>
+    </ul>
+
+    <h2>4. Data Storage</h2>
+    <p>Your wardrobe data and preferences are stored locally on your device and, where applicable, on secure servers. Social media access tokens are stored exclusively on your device using encrypted secure storage and are never transmitted to our servers.</p>
+
+    <h2>5. Third-Party Services</h2>
+    <p>StyleStudio integrates with the following third-party services:</p>
+    <ul>
+      <li><strong style="color: var(--text);">Pinterest API</strong> — to display your pins and boards (read-only)</li>
+      <li><strong style="color: var(--text);">Instagram Graph API</strong> — to display your posts (read-only)</li>
+      <li><strong style="color: var(--text);">TikTok API</strong> — to display your videos (read-only)</li>
+      <li><strong style="color: var(--text);">RevenueCat</strong> — to manage Pro subscriptions</li>
+    </ul>
+    <p>Each of these services has its own privacy policy. We encourage you to review them.</p>
+
+    <h2>6. Data Sharing</h2>
+    <p>We do not sell, trade, or rent your personal information to third parties. We do not share your data except as necessary to operate the app (e.g., processing subscription payments via RevenueCat).</p>
+
+    <h2>7. Data Retention</h2>
+    <p>You can delete your wardrobe data and preferences at any time from within the app. Disconnecting a social account immediately removes its access token from your device.</p>
+
+    <h2>8. Children's Privacy</h2>
+    <p>StyleStudio is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13.</p>
+
+    <h2>9. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify you of any significant changes by updating the date at the top of this page. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>10. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:privacy@stylestudio.app">privacy@stylestudio.app</a></p>
+  </main>
+
+  <footer>
+    © 2026 StyleStudio. All rights reserved.
+  </footer>
+
+</body>
+</html>

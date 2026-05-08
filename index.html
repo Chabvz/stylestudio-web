@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StyleStudio — Your AI Fashion Companion</title>
+  <meta name="description" content="StyleStudio is a personal fashion app that helps you organize your wardrobe, plan outfits, and discover your style — powered by AI." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0D0D0D;
+      --bg2: #111111;
+      --bg3: #161616;
+      --border: #1E1E1E;
+      --green: #4A9B6F;
+      --green-dark: #2E5C40;
+      --green-glow: rgba(74,155,111,0.15);
+      --text: #F5F2EC;
+      --muted: #888;
+      --subtle: #444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--green-dark);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .nav-logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--green-dark);
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--green) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(74,155,111,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-glow);
+      border: 1px solid rgba(74,155,111,0.3);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      letter-spacing: 0.3px;
+    }
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 80px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .hero h1 span { color: var(--green); }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 44px;
+      line-height: 1.7;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-primary:hover { background: #3a8a5f; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.1s;
+    }
+    .btn-secondary:hover { border-color: #444; transform: translateY(-1px); }
+
+    /* PHONE MOCKUP */
+    .hero-mockup {
+      margin-top: 72px;
+      position: relative;
+      display: inline-block;
+    }
+    .phone-frame {
+      width: 260px;
+      height: 520px;
+      background: var(--bg3);
+      border-radius: 40px;
+      border: 2px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+      position: relative;
+    }
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #111 0%, #0D0D0D 50%, #111 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+    }
+    .phone-app-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--green-dark);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: 0 8px 24px rgba(46,92,64,0.4);
+    }
+    .phone-app-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .phone-tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .phone-tab {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--subtle);
+    }
+    .phone-tab.active { background: var(--green); width: 20px; border-radius: 4px; }
+    .phone-notch {
+      position: absolute;
+      top: 12px; left: 50%;
+      transform: translateX(-50%);
+      width: 80px; height: 24px;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+
+    /* STATS */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 0 0 100px;
+    }
+    .stat {
+      flex: 1;
+      max-width: 220px;
+      text-align: center;
+      padding: 40px 24px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+    .stat-num span { color: var(--green); }
+    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* SECTION */
+    section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 60px;
+    }
+
+    /* FEATURES GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: var(--green-dark);
+      transform: translateY(-2px);
+    }
+    .feature-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(46,92,64,0.12) 0%, var(--bg3) 60%);
+      border-color: rgba(74,155,111,0.2);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--green-glow);
+      border: 1px solid rgba(74,155,111,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+    .feature-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .feature-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+    .feature-tag {
+      background: rgba(74,155,111,0.1);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* SOCIAL SECTION */
+    .social-platforms {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    .platform-card {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .platform-dot {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .platform-name { font-size: 15px; font-weight: 600; color: var(--text); }
+    .platform-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* PRO SECTION */
+    .pro-section {
+      background: linear-gradient(135deg, rgba(46,92,64,0.15) 0%, rgba(13,13,13,0) 60%);
+      border: 1px solid rgba(74,155,111,0.2);
+      border-radius: 24px;
+      padding: 60px;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+    .pro-content { flex: 1; }
+    .pro-badge {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .pro-features {
+      list-style: none;
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pro-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+    .pro-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .pro-price {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .price-amount {
+      font-size: 52px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+    .price-period { font-size: 14px; color: var(--muted); margin-top: 4px; margin-bottom: 20px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .footer-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--green-dark);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+    .footer-logo-text { font-size: 16px; font-weight: 700; color: var(--text); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 13px; color: var(--subtle); }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      section { padding: 60px 20px; }
+      .feature-card.featured { grid-column: span 1; }
+      .pro-section { flex-direction: column; padding: 32px; gap: 32px; }
+      .stats { flex-wrap: wrap; }
+      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">✦</div>
+      <span class="nav-logo-text">StyleStudio</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#social">Social</a></li>
+      <li><a href="#pro">Pro</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="#download" class="nav-cta">Download</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">✦ AI-Powered Fashion App</div>
+    <h1>Your wardrobe,<br /><span>reimagined.</span></h1>
+    <p>StyleStudio is the all-in-one fashion companion that organizes your closet, plans your outfits, and connects your style world — powered by AI.</p>
+    <div class="hero-btns">
+      <a href="#download" class="btn-primary">Get the App</a>
+      <a href="#features" class="btn-secondary">See Features</a>
+    </div>
+    <div class="hero-mockup">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-app-icon">✦</div>
+          <div class="phone-app-name">StyleStudio</div>
+          <div class="phone-tabs">
+            <div class="phone-tab active"></div>
+            <div class="phone-tab"></div>
+            <div class="phone-tab"></div>
+            <div class="phone-tab"></div>
+            <div class="phone-tab"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">5<span>+</span></div>
+      <div class="stat-label">Core features</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Social platforms</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">AI<span>✦</span></div>
+      <div class="stat-label">Style recommendations</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Closet items</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything your<br />wardrobe needs</h2>
+    <p class="section-subtitle">From organizing your closet to planning months ahead — StyleStudio has every corner of your fashion life covered.</p>
+
+    <div class="features-grid">
+      <div class="feature-card featured">
+        <div class="feature-icon">✦</div>
+        <div class="feature-name">AI Stylist</div>
+        <div class="feature-desc">Get personalized outfit recommendations based on your wardrobe, style preferences, weather, and calendar events. The more you use StyleStudio, the better it knows your style.</div>
+        <div class="feature-tags">
+          <span class="feature-tag">Outfit Generation</span>
+          <span class="feature-tag">Style Matching</span>
+          <span class="feature-tag">Smart Suggestions</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">👗</div>
+        <div class="feature-name">Smart Closet</div>
+        <div class="feature-desc">Catalog your entire wardrobe with photos, tags, and categories. Filter by color, season, occasion, or brand in seconds.</div>
+        <div class="feature-tags">
+          <span class="feature-tag">Photo Library</span>
+          <span class="feature-tag">Smart Filters</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-name">Style Canvas</div>
+        <div class="feature-desc">A creative sandbox to build fashion mood boards. Layer clothing items, apply cinematic effects, and craft your perfect look before you even get dressed.</div>
+        <div class="feature-tags">
+          <span class="feature-tag">Mood Boards</span>
+          <span class="feature-tag">Visual Effects</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-name">Outfit Calendar</div>
+        <div class="feature-desc">Plan your outfits days or weeks in advance. Never repeat the same look, and always be prepared for any event on your schedule.</div>
+        <div class="feature-tags">
+          <span class="feature-tag">Event Planning</span>
+          <span class="feature-tag">Outfit History</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section id="social" style="background: var(--bg2); max-width: 100%; padding: 100px 0;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 48px;">
+      <div class="section-label">Social</div>
+      <h2 class="section-title">Your style feeds,<br />all in one place</h2>
+      <p class="section-subtitle">Connect your Instagram, TikTok, and Pinterest accounts to view your own fashion content directly inside StyleStudio.</p>
+
+      <div class="social-platforms">
+        <div class="platform-card">
+          <div class="platform-dot" style="background: #E1306C;">IG</div>
+          <div>
+            <div class="platform-name">Instagram</div>
+            <div class="platform-desc">View your posts & fashion content</div>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-dot" style="background: #333;">TT</div>
+          <div>
+            <div class="platform-name">TikTok</div>
+            <div class="platform-desc">Browse your style videos</div>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-dot" style="background: #E60023;">PT</div>
+          <div>
+            <div class="platform-name">Pinterest</div>
+            <div class="platform-desc">See your boards & pins</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 28px; font-size: 13px; color: var(--subtle);">
+        StyleStudio uses OAuth 2.0 and only reads your content — it never posts, follows, or modifies your accounts.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRO -->
+  <section id="pro">
+    <div class="pro-section">
+      <div class="pro-content">
+        <span class="pro-badge">Pro</span>
+        <h2 class="section-title" style="margin-bottom: 8px;">Unlock your full<br />style potential</h2>
+        <p style="color: var(--muted); font-size: 15px;">StyleStudio Pro removes all limits and gives you the full creative toolkit.</p>
+        <ul class="pro-features">
+          <li>Unlimited closet items</li>
+          <li>Advanced AI style recommendations</li>
+          <li>All canvas effects &amp; filters</li>
+          <li>Full social account integration</li>
+          <li>Priority outfit calendar planning</li>
+          <li>Early access to new features</li>
+        </ul>
+      </div>
+      <div class="pro-price">
+        <div class="price-amount">$9<span style="font-size: 24px; color: var(--muted);">.99</span></div>
+        <div class="price-period">per month</div>
+        <a href="#download" class="btn-primary" style="display: inline-block;">Start Free Trial</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" style="text-align: center;">
+    <div class="section-label">Download</div>
+    <h2 class="section-title">Ready to elevate<br />your style?</h2>
+    <p class="section-subtitle" style="margin: 0 auto 40px;">StyleStudio is available on Android. iOS coming soon.</p>
+    <div class="hero-btns" style="justify-content: center;">
+      <a href="#" class="btn-primary">↓ Download for Android</a>
+      <a href="#" class="btn-secondary">iOS — Coming Soon</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="/" class="footer-logo">
+      <div class="footer-logo-icon">✦</div>
+      <span class="footer-logo-text">StyleStudio</span>
+    </a>
+    <ul class="footer-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pro">Pro</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="mailto:hello@stylestudio.app">Contact</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 StyleStudio. All rights reserved.</span>
+  </footer>
+
+</body>
+</html>
